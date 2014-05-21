@@ -14,7 +14,7 @@ class UnionPay extends PaymentModule
 
 	public function __construct()
 	{
-		$this->name = 'UnionPay';
+		$this->name = 'unionpay';
 		$this->displayName = 'VTPayment';
 		$this->tab = 'payments_gateways';
 		$this->version = 1.1;
