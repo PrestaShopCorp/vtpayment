@@ -2,11 +2,11 @@
  * This source file is subject to of the PHP license
  *
  * @author    VTPayment <support@vtpayment.com>
- * @copyright (c) 1997-2001 The PHP Group
+ * @copyright (c) 1997-2001 The PHP Group 
  * @license
  *}
-
-{capture name=path}unionpay{/capture}
+ 
+{capture name=path}UnionPay{/capture}
 {include file="$tpl_dir./breadcrumb.tpl"}
 
 <h2>Order Summary</h2>
@@ -24,11 +24,11 @@
 <input type="hidden" name="transType" value="{$transType|escape:'htmlall':'UTF-8'}" />
  <input type="hidden" name="orderNum" value="{$orderNum|escape:'htmlall':'UTF-8'}" />
  <input type="hidden" name="orderAmount" value="{$orderAmount|escape:'htmlall':'UTF-8'}" />
- <input type="hidden" name="orderCurrency" value="{$orderCurrency|escape:'htmlall':'UTF-8'}" />
+ <input type="hidden" name="orderCurrency" value="{$orderCurrency|escape:'htmlall':'UTF-8'}" /> 
  <input type="hidden" name="merReserve" value="" />
  <input type="hidden" name="frontURL" value="{$frontURL|escape:'htmlall':'UTF-8'}" />
  <input type="hidden" name="backURL" value="{$backURL|escape:'htmlall':'UTF-8'}" />
- <input type="hidden" name="merID" value="{$merID|escape:'htmlall':'UTF-8'}">
+ <input type="hidden" name="merID" value="{$merID|escape:'htmlall':'UTF-8'}">  
  <input type="hidden" name="acqID" value="{$acqID|escape:'htmlall':'UTF-8'}" />
  <input type="hidden" name="paymentSchema" value="UP" />
  <input type="hidden" name="transTime" value="{$transTime|escape:'htmlall':'UTF-8'}" />
@@ -36,7 +36,7 @@
  <input type="hidden" name="signature" value="{$signature|escape:'htmlall':'UTF-8'}" />
  <input type="hidden" name="cart_id" value="{$cart_id|escape:'htmlall':'UTF-8'}" />
     <p>&nbsp;</p>
-
+    	
     <p>
           UnionPay  Payment.
         <br /><br />
@@ -44,10 +44,10 @@
     </p>
     <p class="cart_navigation">
      <a href="javascript:document.checkout_confirmation.submit();" class="exclusive_large">Confirmation Order </a>
-
+       
         <a href="{$link->getPageLink('order', true, NULL, "step=3")|escape:'htmlall':'UTF-8'}" class="button_large">Other Payment Method</a>
     </p>
-
+    
 </form>
 
 {/if}

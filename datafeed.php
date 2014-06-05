@@ -24,16 +24,16 @@ $cart_id 			= isset($_REQUEST['remark']) 		? $_REQUEST['remark']		: '';
 
 echo 'OK! ';
 
-$secure_hash_secret	= Configuration::get('SECURE_HASH_SECRET');
+$secure_hash_secret = Configuration::get('VTPAYMENT_SECURE_HASH_SECRET');
 
 $order_id = Order::getOrderByCartId($cart_id);
 
 if ($order_id)
 {
 	$order = new Order($order_id);
-	$unionpay = new unionpay();
+	$vtpayment = new unionpay();
 	if ($secure_hash_secret != '')
-		$is_valid_secure_hash = $unionpay->verifyPaymentDatafeed
+		$is_valid_secure_hash = $vtpayment->verifyPaymentDatafeed
 		($src, $prc, $success_code, $order_ref, $payment_ref, $currency, $amount, $payer_auth, $secure_hash_secret, $secure_hash);
 	if ($secure_hash_secret == '' || $is_valid_secure_hash)
 	{
@@ -56,4 +56,3 @@ if ($order_id)
 	}
 
 }
-?>

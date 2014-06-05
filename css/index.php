@@ -9,4 +9,3 @@
 
 header("Location:'../../../'");
 exit();
-?>
