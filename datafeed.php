@@ -10,7 +10,6 @@
 include(dirname(__FILE__).'/../../config/config.inc.php');
 include(dirname(__FILE__).'/../../header.php');
 
-
 $success_code 		= isset($_REQUEST['successcode']) 	? $_REQUEST['successcode'] 	: '';
 $prc 				= isset($_REQUEST['prc']) 			? $_REQUEST['prc'] 			: '';
 $src 				= isset($_REQUEST['prc']) 			? $_REQUEST['src'] 			: '';
@@ -33,8 +32,8 @@ if ($order_id)
 	$order = new Order($order_id);
 	$vtpayment = new unionpay();
 	if ($secure_hash_secret != '')
-		$is_valid_secure_hash = $vtpayment->verifyPaymentDatafeed
-		($src, $prc, $success_code, $order_ref, $payment_ref, $currency, $amount, $payer_auth, $secure_hash_secret, $secure_hash);
+                $dataAry =  array("src","prc","success_code","order_ref","payment_ref","currency","amount","payer_auth","secure_hash_secret","secure_hash");
+		$is_valid_secure_hash = $vtpayment->verifyPaymentDatafeed($dataAry);
 	if ($secure_hash_secret == '' || $is_valid_secure_hash)
 	{
 		if ($success_code == '0')
@@ -52,7 +51,6 @@ if ($order_id)
 	else
 	{
 		echo ' - Invalid SecureHash';
-
 	}
 
 }

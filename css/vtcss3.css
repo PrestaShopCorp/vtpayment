@@ -28,9 +28,9 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
-body {
+/*body {
 	line-height: 1;
-}
+}*/
 ol, ul {
 	list-style: none;
 }
@@ -44,7 +44,7 @@ q:before, q:after {
 }
 table {
 	border-collapse: collapse;
-	border-spacing: 0;
+	/*border-spacing: 0;*/
 }
 a{
 	text-decoration:none;
@@ -101,7 +101,6 @@ a{
 	color: #00b8f6;
 }
 .start{
-
 	display: block;
 	width: 220px;
 	height:30px;

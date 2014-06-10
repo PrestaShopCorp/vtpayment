@@ -46,23 +46,20 @@ class vtpayment extends PaymentModule
 	public function install()
 	{
 		//Call PaymentModule default install function
-			parent::install();
-		//Create Payment Hooks
-			$this->registerHook('payment');
-			$this->registerHook('paymentReturn');
-                        return true;// added 0605
+		return	parent::install()&&$this->registerHook('payment')&&$this->registerHook('paymentReturn');
+                     //   return true;// added 0605
 	}
 	public function uninstall()
 	{
-		Configuration::deleteByName('PAYMENT_URL');
-		Configuration::deleteByName('MERCHANT_ID');
-		Configuration::deleteByName('PAY_TYPE');
-		Configuration::deleteByName('PAY_METHOD');
-		Configuration::deleteByName('LANGUAGE');
-		Configuration::deleteByName('INITIAL_ORDER_STATUS_ID');
-		Configuration::deleteByName('VTPAYMENT_SECURE_HASH_SECRET');
-		parent::uninstall();
-                return true;// added 0605
+            return  Configuration::deleteByName('PAYMENT_URL')&&
+                    Configuration::deleteByName('MERCHANT_ID')&&
+                    Configuration::deleteByName('PAY_TYPE')&&
+                    Configuration::deleteByName('PAY_METHOD')&&
+                    Configuration::deleteByName('LANGUAGE')&&
+                    Configuration::deleteByName('INITIAL_ORDER_STATUS_ID')&&
+                    Configuration::deleteByName('VTPAYMENT_SECURE_HASH_SECRET')&&
+                    parent::uninstall();
+               // return true;// added 0605
 	}
 	public function getContent()
 	{
@@ -113,7 +110,7 @@ class vtpayment extends PaymentModule
 		//get currency code
 		$curr = Currency::getCurrency($cart->id_currency);
 		$currency = $curr['iso_code'];
-		//$currency = $curr['iso_code_num']; 获取币种数字
+		//$currency = $curr['iso_code_num'];
 		date_default_timezone_set('PRC');
 		$trans_time = date('YmdHis');
 		/**
@@ -194,20 +191,18 @@ class vtpayment extends PaymentModule
 	{
 		ksort($md5_array);
 		$md5str = '';
-	foreach ($md5_array as $k => $v)
+                foreach ($md5_array as $k => $v)
 			$md5str .= $k.'='.$v.'&';
 		$md5str = Tools::substr($md5str, 0, Tools::strlen($md5str) - 1);
 		//encrypted by md5
 		return md5($md5str.Configuration::get('VTPAYMENT_SECURE_HASH_SECRET'));
 	}
-	public function verifyPaymentDatafeed($src, $prc, $success_code, $merchant_reference_number,
-	$vtpaymentdollar_reference_number, $currency_code, $amount, $payer_authentication_status, $secure_hash_secret, $secure_hash)
+        
+	public function verifyPaymentDatafeed($dataAry)
 	{
-		$buffer = $src.'|'.$prc.'|'.$success_code.'|'.$merchant_reference_number.'|'.
-		$vtpaymentdollar_reference_number.'|'.$currency_code.'|'.$amount.'|'.$payer_authentication_status.'|'.$secure_hash_secret;
-
+                $buffer =$dataAry['src'].'|'.$dataAry['prc'].'|'.$dataAry['success_code'].'|'.$dataAry['merchant_reference_number'].'|'.
+		$dataAry['vtpaymentdollar_reference_number'].'|'.$dataAry['currency_code'].'|'.$dataAry['amount'].'|'.$dataAry['payer_authentication_status'].'|'.$dataAry['secure_hash_secret'];
 		$verify_data = sha1($buffer);
-
 		if ($secure_hash == $verify_data)
 			return true;
 		return false;
@@ -247,14 +242,14 @@ class vtpayment extends PaymentModule
             $secure_hash_secret = Tools::getValue('VTPAYMENT_SECURE_HASH_SECRET');
             if ($secure_hash_secret === false)
             $this->post_errors[] = 'VTPAYMENT_SECURE_HASH_SECRET is required.';
-			//if (empty($_POST['PAY_TYPE']))
-			//	$this->_postErrors[] = 'Pay Type is required.';
-			//if (empty($_POST['PAY_METHOD']))
-			//	$this->_postErrors[] = 'Pay Method is required.';
-			//if (empty($_POST['LANGUAGE']))
-			//	$this->_postErrors[] = 'Language is required.';
-			//if (empty($_POST['INITIAL_ORDER_STATUS_ID']))
-				//$this->_postErrors[] = 'Initial Order Status ID is required.';
+		//if (empty($_POST['PAY_TYPE']))
+		//	$this->_postErrors[] = 'Pay Type is required.';
+		//if (empty($_POST['PAY_METHOD']))
+		//	$this->_postErrors[] = 'Pay Method is required.';
+		//if (empty($_POST['LANGUAGE']))
+		//	$this->_postErrors[] = 'Language is required.';
+		//if (empty($_POST['INITIAL_ORDER_STATUS_ID']))
+		//$this->_postErrors[] = 'Initial Order Status ID is required.';
 	}
 	}
 
@@ -282,7 +277,8 @@ class vtpayment extends PaymentModule
 			Configuration::updateValue('VTPAYMENT_SECURE_HASH_SECRET', $secure_hash_secret);
 
 			$updated = 'saved';
-			$this->_html .= "<div class='conf confirm'>{$updated}</div>";
+//			$this->_html .= "<div class='conf confirm'>{$updated}</div>";
+                        $this->_html .= "<div  style='font-size: 12px;font-weight: normal;margin: 0 0 10px 0;line-height: 20px;padding: 13px 5px 5px 40px;min-height: 28px;background: #DFF2BF url(../img/admin/icon-valid.png) no-repeat scroll 8px 8px;border: 1px solid #4F8A10;color: #4F8A10;border-radius: 3px;'>{$updated}</div>";
 		}
 	}
 
