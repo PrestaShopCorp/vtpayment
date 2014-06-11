@@ -9,17 +9,18 @@
 
 include(dirname(__FILE__).'/../../config/config.inc.php');
 include(dirname(__FILE__).'/../../header.php');
+include(dirname(__FILE__).'vtpayment.php');
 
-$success_code 		= isset($_REQUEST['successcode']) 	? $_REQUEST['successcode'] 	: '';
-$prc 				= isset($_REQUEST['prc']) 			? $_REQUEST['prc'] 			: '';
-$src 				= isset($_REQUEST['prc']) 			? $_REQUEST['src'] 			: '';
-$order_ref 			= isset($_REQUEST['Ref']) 			? $_REQUEST['Ref'] 			: '';
-$payment_ref 		= isset($_REQUEST['PayRef']) 		? $_REQUEST['PayRef']		: '';
-$currency	 		= isset($_REQUEST['Cur']) 			? $_REQUEST['Cur'] 			: '';
-$amount 			= isset($_REQUEST['Amt']) 			? $_REQUEST['Amt'] 			: '';
-$payer_auth			= isset($_REQUEST['payerAuth']) 	? $_REQUEST['payerAuth'] 	: '';
-$secure_hash 		= isset($_REQUEST['secureHash']) 	? $_REQUEST['secureHash']	: '';
-$cart_id 			= isset($_REQUEST['remark']) 		? $_REQUEST['remark']		: '';
+$success_code 		= Tools::getIsset('successcode') 	? Tools::getIsset('successcode') 	: '';
+$prc 				= Tools::getIsset('prc') 			? Tools::getIsset('prc')  			: '';
+$src 				= Tools::getIsset('src') 			? Tools::getIsset('src')  			: '';
+$order_ref 			= Tools::getIsset('Ref') 			?Tools::getIsset('Ref')  			: '';
+$payment_ref 		= Tools::getIsset('PayRef') 		? Tools::getIsset('PayRef')		: '';
+$currency	 		= Tools::getIsset('Cur') 			?Tools::getIsset('Cur')			: '';
+$amount 			= Tools::getIsset('Amt') 			? Tools::getIsset('Amt') 			: '';
+$payer_auth			= Tools::getIsset('payerAuth') 	? Tools::getIsset('payerAuth') 	: '';
+$secure_hash 		= Tools::getIsset('secureHash') 	? Tools::getIsset('secureHash') 	: '';
+$cart_id 			= Tools::getIsset('remark') 		? Tools::getIsset('remark')		: '';
 
 echo 'OK! ';
 
@@ -30,10 +31,11 @@ $order_id = Order::getOrderByCartId($cart_id);
 if ($order_id)
 {
 	$order = new Order($order_id);
-	$vtpayment = new unionpay();
-	if ($secure_hash_secret != '')
+	$vtpayment = new vtpayment();
+	if ($secure_hash_secret != ''){
                 $dataAry =  array("src","prc","success_code","order_ref","payment_ref","currency","amount","payer_auth","secure_hash_secret","secure_hash");
 		$is_valid_secure_hash = $vtpayment->verifyPaymentDatafeed($dataAry);
+        }
 	if ($secure_hash_secret == '' || $is_valid_secure_hash)
 	{
 		if ($success_code == '0')

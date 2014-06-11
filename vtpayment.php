@@ -71,19 +71,17 @@ class vtpayment extends PaymentModule
 			else
 				foreach ($this->post_errors as $err)
 					$this->_html .= "<div class='alert error'>{$err}</div>";
-
 		}
 		else
 		$this->_html .= '<br />';
 		$this->displaycheckout();
 		$this->displayForm();
 		return $this->_html;
-	}
-
-
+        }
 
 
 	public function execPayment($cart)
+        
 	{
 		//$delivery = new Address(intval($cart->id_address_delivery));
 	//	$invoice = new Address(intval($cart->id_address_invoice));
@@ -127,15 +125,20 @@ class vtpayment extends PaymentModule
 		$order_ref			= $cart_id.$order->reference;
 	//	$remark				= $cart_id;
 		/* to identify if using http or https */
-		if (!empty($_SERVER['HTTPS']))
-		{
-			if ($_SERVER['HTTPS'] !== 'off')
-				$http_orhttps = 'https';
-			else
-				$http_orhttps = 'http';
-		}
-		else
-		$http_orhttps = 'http';
+//		if (!empty($_SERVER['HTTPS']))
+//		{
+//			if ($_SERVER['HTTPS'] !== 'off')
+//				$http_orhttps = 'https';
+//			else
+//				$http_orhttps = 'http';
+//		}
+//		else
+//		$http_orhttps = 'http';
+                
+                $http_orhttps = (!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS'] !== 'off') ? 'https': 'https';
+
+
+
 		$success_url = $http_orhttps.'://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/vtpayment/validation.php?success=true&cart_id='.$cart_id;
 		$acq_id = '99020344';
 		$array = array(
