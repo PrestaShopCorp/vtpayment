@@ -238,13 +238,13 @@ class vtpayment extends PaymentModule
             {
             $payment_url = Tools::getValue('PAYMENT_URL');
             if ($payment_url === false)
-            $this->post_errors[] = 'Payment URL is required.';
+            	$this->post_errors[] = 'Payment URL is required.';
             $merchant_id = Tools::getValue('MERCHANT_ID');
             if ($merchant_id === false)
-            $this->post_errors[] = 'Merchant ID is required.';
+            	$this->post_errors[] = 'Merchant ID is required.';
             $secure_hash_secret = Tools::getValue('VTPAYMENT_SECURE_HASH_SECRET');
             if ($secure_hash_secret === false)
-            $this->post_errors[] = 'VTPAYMENT_SECURE_HASH_SECRET is required.';
+            	$this->post_errors[] = 'VTPAYMENT_SECURE_HASH_SECRET is required.';
 		//if (empty($_POST['PAY_TYPE']))
 		//	$this->_postErrors[] = 'Pay Type is required.';
 		//if (empty($_POST['PAY_METHOD']))
