@@ -33,8 +33,8 @@ if ($order_id)
 	$order = new Order($order_id);
 	$vtpayment = new vtpayment();
 	if ($secure_hash_secret != ''){
-                $dataAry =  array("src","prc","success_code","order_ref","payment_ref","currency","amount","payer_auth","secure_hash_secret","secure_hash");
-		$is_valid_secure_hash = $vtpayment->verifyPaymentDatafeed($dataAry);
+                $dataAry =  array("src","prc","success_code","order_ref","payment_ref","currency","amount","payer_auth","secure_hash_secret");
+		$is_valid_secure_hash = $vtpayment->verifyPaymentDatafeed($dataAry,$secure_hash);
         }
 	if ($secure_hash_secret == '' || $is_valid_secure_hash)
 	{

@@ -11,13 +11,13 @@ include(dirname(__FILE__).'/../../config/config.inc.php');
 include(dirname(__FILE__).'/../../header.php');
 include(dirname(__FILE__).'/vtpayment.php');
 
-$cart_id = $_REQUEST['cart_id'];
-$code = $_REQUEST['RespCode'];
+$cart_id = Tools::getValue('cart_id');
+$code = Tools::getValue('RespCode');
 $order_id = Order::getOrderByCartId($cart_id);
 $order = new Order($order_id);
-$union_pay = new vtpayment();
+//$union_pay = new vtpayment();
 
-if (isset($_REQUEST['success']) && $code == '00')
+if (Tools::getValue('success') && $code == '00')
 {
 	$order->setCurrentState(Configuration::get('PS_OS_PAYMENT'));
 	header('Location: '.__PS_BASE_URI__.'modules/vtpayment/success.php?cart_id='.$cart_id);

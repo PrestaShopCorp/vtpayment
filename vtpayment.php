@@ -19,21 +19,21 @@ class vtpayment extends PaymentModule
 		$this->tab = 'payments_gateways';
 		$this->version = 1.1;
 		$this->author = 'VTPayment';
-		$arr = array('PAYMENT_URL', 'MERCHANT_ID', 'PAY_TYPE', 'PAY_METHOD', 'LANGUAGE', 'INITIAL_ORDER_STATUS_ID', 'VTPAYMENT_SECURE_HASH_SECRET');
+		$arr = array('VTPAYMENT_PAYMENT_URL', 'VTPAYMENT_MERCHANT_ID', 'VTPAYMENT_PAY_TYPE', 'VTPAYMENT_PAY_METHOD', 'VTPAYMENT_LANGUAGE', 'VTPAYMENT_INITIAL_ORDER_STATUS_ID', 'VTPAYMENT_SECURE_HASH_SECRET');
 		$config = Configuration::getMultiple($arr);
 
-		if (isset($config['PAYMENT_URL']))
-			$this->payment_url = $config['PAYMENT_URL'];
-		if (isset($config['MERCHANT_ID']))
+		if (isset($config['VTPAYMENT_PAYMENT_URL']))
+			$this->payment_url = $config['VTPAYMENT_PAYMENT_URL'];
+		if (isset($config['VTPAYMENT_MERCHANT_ID']))
 			$this->merchant_id = $config['MERCHANT_ID'];
-		if (isset($config['PAY_TYPE']))
-			$this->pay_type = $config['PAY_TYPE'];
-		if (isset($config['PAY_METHOD']))
-			$this->pay_method = $config['PAY_METHOD'];
-		if (isset($config['LANGUAGE']))
-			$this->language = $config['LANGUAGE'];
-		if (isset($config['INITIAL_ORDER_STATUS_ID']))
-			$this->initial_order_status_id = $config['INITIAL_ORDER_STATUS_ID'];
+		if (isset($config['VTPAYMENT_VTPAYMENT_PAY_TYPE']))
+			$this->pay_type = $config['VTPAYMENT_PAY_TYPE'];
+		if (isset($config['VTPAYMENT_PAY_METHOD']))
+			$this->pay_method = $config['VTPAYMENT_PAY_METHOD'];
+		if (isset($config['VTPAYMENT_LANGUAGE']))
+			$this->language = $config['VTPAYMENT_LANGUAGE'];
+		if (isset($config['VTPAYMENT_INITIAL_ORDER_STATUS_ID']))
+			$this->initial_order_status_id = $config['VTPAYMENT_INITIAL_ORDER_STATUS_ID'];
 		if ($config['VTPAYMENT_SECURE_HASH_SECRET'] == null)
 			$this->secure_hash_secret = '';
 		else
@@ -51,12 +51,12 @@ class vtpayment extends PaymentModule
 	}
 	public function uninstall()
 	{
-            return  Configuration::deleteByName('PAYMENT_URL')&&
-                    Configuration::deleteByName('MERCHANT_ID')&&
-                    Configuration::deleteByName('PAY_TYPE')&&
-                    Configuration::deleteByName('PAY_METHOD')&&
-                    Configuration::deleteByName('LANGUAGE')&&
-                    Configuration::deleteByName('INITIAL_ORDER_STATUS_ID')&&
+            return  Configuration::deleteByName('VTPAYMENT_PAYMENT_URL')&&
+                    Configuration::deleteByName('VTPAYMENT_MERCHANT_ID')&&
+                    Configuration::deleteByName('VTPAYMENT_PAY_TYPE')&&
+                    Configuration::deleteByName('VTPAYMENT_PAY_METHOD')&&
+                    Configuration::deleteByName('VTPAYMENT_LANGUAGE')&&
+                    Configuration::deleteByName('VTPAYMENT_INITIAL_ORDER_STATUS_ID')&&
                     Configuration::deleteByName('VTPAYMENT_SECURE_HASH_SECRET')&&
                     parent::uninstall();
                // return true;// added 0605
@@ -84,7 +84,7 @@ class vtpayment extends PaymentModule
         
 	{
 		//$delivery = new Address(intval($cart->id_address_delivery));
-	//	$invoice = new Address(intval($cart->id_address_invoice));
+                //$invoice = new Address(intval($cart->id_address_invoice));
 		$customer = new Customer($cart->id_customer);
 		//global  $smarty;
 		$products = $cart->getProducts();
@@ -93,12 +93,12 @@ class vtpayment extends PaymentModule
 		$products[$key]['name'] = str_replace('"', '\'', $product['name']);
 			$products[$key]['name'] = htmlentities(utf8_decode($product['name']));
 		}
-		$payment_url			= Configuration::get('PAYMENT_URL');
-		$merchant_id			= Configuration::get('MERCHANT_ID');
-	//	$pay_type			= Configuration::get('PAY_TYPE');
-	//	$pay_method			= Configuration::get('PAY_METHOD');
-	//	$language			= Configuration::get('LANGUAGE');
-		$init_order_status_id	= Configuration::get('INITIAL_ORDER_STATUS_ID');
+		$payment_url			= Configuration::get('VTPAYMENT_PAYMENT_URL');
+		$merchant_id			= Configuration::get('VTPAYMENT_MERCHANT_ID');
+	//	$pay_type			= Configuration::get('VTPAYMENT_PAY_TYPE');
+	//	$pay_method			= Configuration::get('VTPAYMENT_PAY_METHOD');
+	//	$language			= Configuration::get('VTPAYMENT_LANGUAGE');
+		$init_order_status_id	= Configuration::get('VTPAYMENT_INITIAL_ORDER_STATUS_ID');
 		$secure_hash_secret	= Configuration::get('VTPAYMENT_SECURE_HASH_SECRET');
 		$amount			= number_format($cart->getOrderTotal(true, 3), 2, '.', '');
 		$amount = sprintf('%.2f', $amount);
@@ -135,9 +135,7 @@ class vtpayment extends PaymentModule
 //		else
 //		$http_orhttps = 'http';
                 
-                $http_orhttps = (!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS'] !== 'off') ? 'https': 'https';
-
-
+                $http_orhttps = (!empty($_SERVER['HTTPS'])&&$_SERVER['HTTPS'] !== 'off') ? 'https': 'http';
 
 		$success_url = $http_orhttps.'://'.$_SERVER['HTTP_HOST'].__PS_BASE_URI__.'modules/vtpayment/validation.php?success=true&cart_id='.$cart_id;
 		$acq_id = '99020344';
@@ -147,16 +145,16 @@ class vtpayment extends PaymentModule
 			'transType'                 =>'PURC',
 			'orderNum'                  => $order_ref,
 			'orderAmount'               => $amount,
-			'orderCurrency'           	=> $currency,
+			'orderCurrency'             => $currency,
 			'merReserve'                =>'',
-			'frontURL'                 => $success_url,
-			'backURL'                  => $success_url,
+			'frontURL'                  => $success_url,
+			'backURL'                   => $success_url,
 			'merID'                     => $merchant_id,
 			'acqID'                     =>$acq_id,
 			'paymentSchema'             =>'UP',
 			'transTime'                 =>$trans_time,
 			'signType'                  =>'MD5',
-			'cart_id'                  =>$cart_id
+			'cart_id'                   =>$cart_id
 		);
                 $secure_hash = '';
 		if ($secure_hash_secret == '')
@@ -201,14 +199,15 @@ class vtpayment extends PaymentModule
 		return md5($md5str.Configuration::get('VTPAYMENT_SECURE_HASH_SECRET'));
 	}
         
-	public function verifyPaymentDatafeed($dataAry)
+	public function verifyPaymentDatafeed($dataAry,$secure_hash)
 	{
-                $buffer =$dataAry['src'].'|'.$dataAry['prc'].'|'.$dataAry['success_code'].'|'.$dataAry['merchant_reference_number'].'|'.
-		$dataAry['vtpaymentdollar_reference_number'].'|'.$dataAry['currency_code'].'|'.$dataAry['amount'].'|'.$dataAry['payer_authentication_status'].'|'.$dataAry['secure_hash_secret'];
-		$verify_data = sha1($buffer);
-		if ($secure_hash == $verify_data)
-			return true;
-		return false;
+//                $buffer =$dataAry['src'].'|'.$dataAry['prc'].'|'.$dataAry['success_code'].'|'.$dataAry['merchant_reference_number'].'|'.
+//		$dataAry['vtpaymentdollar_reference_number'].'|'.$dataAry['currency_code'].'|'.$dataAry['amount'].'|'.$dataAry['payer_authentication_status'].'|'.$dataAry['secure_hash_secret'];
+//		$verify_data = sha1($buffer);
+//		if ($secure_hash == $verify_data)
+//			return true;
+//		return false;
+                 return $secure_hash == sha1(implode('|', $dataAry));
 	}
 	public function hookPayment()
 	{
@@ -236,22 +235,22 @@ class vtpayment extends PaymentModule
             //   include '../../tools/profiling/Tools.php';
             if (Tools::getValue('btnSubmit'))
             {
-            $payment_url = Tools::getValue('PAYMENT_URL');
-            if ($payment_url === false)
-            $this->post_errors[] = 'Payment URL is required.';
-            $merchant_id = Tools::getValue('MERCHANT_ID');
-            if ($merchant_id === false)
-            $this->post_errors[] = 'Merchant ID is required.';
-            $secure_hash_secret = Tools::getValue('VTPAYMENT_SECURE_HASH_SECRET');
-            if ($secure_hash_secret === false)
-            $this->post_errors[] = 'VTPAYMENT_SECURE_HASH_SECRET is required.';
-		//if (empty($_POST['PAY_TYPE']))
+          
+            if (Tools::getValue('VTPAYMENT_PAYMENT_URL') === false)
+                $this->post_errors[] = 'Payment URL is required.';
+          
+            if (Tools::getValue('VTPAYMENT_MERCHANT_ID') === false)
+                $this->post_errors[] = 'Merchant ID is required.';
+          
+            if (Tools::getValue('VTPAYMENT_SECURE_HASH_SECRET') === false)
+                $this->post_errors[] = 'VTPAYMENT_SECURE_HASH_SECRET is required.';
+		//if (empty($_POST['VTPAYMENT_PAY_TYPE']))
 		//	$this->_postErrors[] = 'Pay Type is required.';
-		//if (empty($_POST['PAY_METHOD']))
+		//if (empty($_POST['VTPAYMENT_PAY_METHOD']))
 		//	$this->_postErrors[] = 'Pay Method is required.';
-		//if (empty($_POST['LANGUAGE']))
+		//if (empty($_POST['VTPAYMENT_LANGUAGE']))
 		//	$this->_postErrors[] = 'Language is required.';
-		//if (empty($_POST['INITIAL_ORDER_STATUS_ID']))
+		//if (empty($_POST['VTPAYMENT_INITIAL_ORDER_STATUS_ID']))
 		//$this->_postErrors[] = 'Initial Order Status ID is required.';
 	}
 	}
@@ -260,19 +259,19 @@ class vtpayment extends PaymentModule
 	{
 		if ((Tools::getValue('btnSubmit')))
 		{
-			$payment_url = Tools::getValue('PAYMENT_URL');
-			$merchant_id = Tools::getValue('MERCHANT_ID');
-			$pay_type = Tools::getValue('PAY_TYPE');
-			$pay_method = Tools::getValue('PAY_METHOD');
-			$language = Tools::getValue('LANGUAGE');
-			$initial_order_status_id = Tools::getValue('INITIAL_ORDER_STATUS_ID');
+			$payment_url = Tools::getValue('VTPAYMENT_PAYMENT_URL');
+			$merchant_id = Tools::getValue('VTPAYMENT_MERCHANT_ID');
+			$pay_type = Tools::getValue('VTPAYMENT_PAY_TYPE');
+			$pay_method = Tools::getValue('VTPAYMENT_PAY_METHOD');
+			$language = Tools::getValue('VTPAYMENT_LANGUAGE');
+			$initial_order_status_id = Tools::getValue('VTPAYMENT_INITIAL_ORDER_STATUS_ID');
 			$secure_hash_secret = Tools::getValue('VTPAYMENT_SECURE_HASH_SECRET');
-			Configuration::updateValue('PAYMENT_URL', $payment_url);
-			Configuration::updateValue('MERCHANT_ID', $merchant_id);
-			Configuration::updateValue('PAY_TYPE', $pay_type);
-			Configuration::updateValue('PAY_METHOD', $pay_method);
-			Configuration::updateValue('LANGUAGE', $language);
-			Configuration::updateValue('INITIAL_ORDER_STATUS_ID', $initial_order_status_id);
+			Configuration::updateValue('VTPAYMENT_PAYMENT_URL', $payment_url);
+			Configuration::updateValue('VTPAYMENT_MERCHANT_ID', $merchant_id);
+			Configuration::updateValue('VTPAYMENT_PAY_TYPE', $pay_type);
+			Configuration::updateValue('VTPAYMENT_PAY_METHOD', $pay_method);
+			Configuration::updateValue('VTPAYMENT_LANGUAGE', $language);
+			Configuration::updateValue('VTPAYMENT_INITIAL_ORDER_STATUS_ID', $initial_order_status_id);
 			if (Tools::getValue('VTPAYMENT_SECURE_HASH_SECRET'))
 				$secure_hash_secret = $secure_hash_secret;
 			else
@@ -345,22 +344,22 @@ class vtpayment extends PaymentModule
 		$this->_html .= "<table style='border:0;width:800px;cellpadding:2;cellspacing:0;overflow:hidden;margin:0 auto;text-align:center;'id='form'>";
 		$this->_html .= "<tr><td height='30'></td></tr><tr><td width='300' class='vttd' style='text-align: right;color:#000'>";
 		$this->_html .= "{$mod_client_label_payment_url}</td><td class='vttd' style='text-align: left; padding-left:20px;' width='400'>";
-		$this->_html .= "<input type='text' name='PAYMENT_URL' value='{$mod_client_value_payment_url}' style='width: 300px;' /></td></tr>";
+		$this->_html .= "<input type='text' name='VTPAYMENT_PAYMENT_URL' value='{$mod_client_value_payment_url}' style='width: 300px;' /></td></tr>";
 		$this->_html .= "<tr><td width='300'  class='vttd' style='text-align: right;color:#000'>{$mod_client_label_merchant_id}</td>";
 		$this->_html .= "<td class='vttd' style='text-align:left;padding-left:20px;color:#000'>";
-		$this->_html .= "<input type='text' name='MERCHANT_ID' value='{$mod_client_value_merchant_id}' style='width: 300px;' /></td></tr>";
+		$this->_html .= "<input type='text' name='VTPAYMENT_MERCHANT_ID' value='{$mod_client_value_merchant_id}' style='width: 300px;' /></td></tr>";
 		$this->_html .= "<tr><td width='300'  class='vttd' style='text-align: right;color:#000'>{$mod_client_label_secure_hash_secret}</td>";
 		$this->_html .= "<td class='vttd'  style='text-align: left; padding-left:20px;color:#000' >";
 		$this->_html .= "<input type='text' name='VTPAYMENT_SECURE_HASH_SECRET' value='{$mod_client_value_secure_hash_secret}' style='width: 300px;' /></td></tr>";
 		$this->_html .= "<tr  style='display:none'><td class='vttd'>{$mod_client_label_pay_type}</td><td class='vttd'>";
-		$this->_html .= "<input type='text' name='PAY_TYPE' value='{$mod_client_value_pay_type}' style='width: 300px;' /></td></tr>";
+		$this->_html .= "<input type='text' name='VTPAYMENT_PAY_TYPE' value='{$mod_client_value_pay_type}' style='width: 300px;' /></td></tr>";
 		$this->_html .= "<tr style='display:none'><td class='vttd'>{$mod_client_label_pay_method}</td><td>";
-		$this->_html .= "<input type='text' name='PAY_METHOD' value='{$mod_client_value_pay_method}' style='width: 300px;' /></td></tr>";
+		$this->_html .= "<input type='text' name='VTPAYMENT_PAY_METHOD' value='{$mod_client_value_pay_method}' style='width: 300px;' /></td></tr>";
 		$this->_html .= "<tr  style='display:none'><td>{$mod_client_label_language}</td><td>";
-		$this->_html .= "<input type='text' name='LANGUAGE' value='{$mod_client_value_language}' style='width: 300px;' /></td></tr>";
+		$this->_html .= "<input type='text' name='VTPAYMENT_LANGUAGE' value='{$mod_client_value_language}' style='width: 300px;' /></td></tr>";
 		$this->_html .= "<tr><td width='300'  class='vttd'  style='text-align: right;color:#000' >{$mod_client_label_initial_order_status_id}</td>";
 		$this->_html .= "<td class='vttd'  style='text-align: left; padding-left:20px;' >";
-		$this->_html .= "<input type='text' name='INITIAL_ORDER_STATUS_ID' value='1' style='width: 300px;' /></td></tr>";
+		$this->_html .= "<input type='text' name='VTPAYMENT_INITIAL_ORDER_STATUS_ID' value='1' style='width: 300px;' /></td></tr>";
 		$this->_html .= "<tr><td width='960' colspan='2' align='center' class='vttd' color='#000'>";
 		$this->_html .= "<input class='button' name='btnSubmit' value='{$mod_update_settings}' type='submit' /></td></tr></table></fieldset>";
 		$this->_html .= '</form></p></div></div>';
