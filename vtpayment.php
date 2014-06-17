@@ -235,6 +235,7 @@ class vtpayment extends PaymentModule
             //   include '../../tools/profiling/Tools.php';
             if (Tools::getValue('btnSubmit'))
             {
+<<<<<<< HEAD
           
             if (Tools::getValue('VTPAYMENT_PAYMENT_URL') === false)
                 $this->post_errors[] = 'Payment URL is required.';
@@ -245,6 +246,18 @@ class vtpayment extends PaymentModule
             if (Tools::getValue('VTPAYMENT_SECURE_HASH_SECRET') === false)
                 $this->post_errors[] = 'VTPAYMENT_SECURE_HASH_SECRET is required.';
 		//if (empty($_POST['VTPAYMENT_PAY_TYPE']))
+=======
+            $payment_url = Tools::getValue('PAYMENT_URL');
+            if ($payment_url === false)
+            	$this->post_errors[] = 'Payment URL is required.';
+            $merchant_id = Tools::getValue('MERCHANT_ID');
+            if ($merchant_id === false)
+            	$this->post_errors[] = 'Merchant ID is required.';
+            $secure_hash_secret = Tools::getValue('VTPAYMENT_SECURE_HASH_SECRET');
+            if ($secure_hash_secret === false)
+            	$this->post_errors[] = 'VTPAYMENT_SECURE_HASH_SECRET is required.';
+		//if (empty($_POST['PAY_TYPE']))
+>>>>>>> origin/master
 		//	$this->_postErrors[] = 'Pay Type is required.';
 		//if (empty($_POST['VTPAYMENT_PAY_METHOD']))
 		//	$this->_postErrors[] = 'Pay Method is required.';
