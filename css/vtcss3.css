@@ -90,7 +90,6 @@ a{
 	}
 .sign_btn a{
 	font-size:10px;
-	font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	font-weight:500;
 	float:right;
 	margin-top:6px;
@@ -108,7 +107,6 @@ a{
 	text-align:center;
 	padding-top:10px;
 	font-size:22px;
-	font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	cursor:pointer;
 	background:#00a5d4;
 	animation: myfirstOut 1s;
@@ -177,7 +175,6 @@ to {background: #00a5d4}
 }
 
 .slogan p{
-	font-family:Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	font-size:22px;
 	color:#00aee0;
 	line-height:28px;
@@ -188,7 +185,6 @@ to {background: #00a5d4}
 	padding-right: 35px;
 	padding-bottom: 10px;
 	margin: 0 auto;
-	font-family: Helvetica, Arial, sans-serif;
 	color:#999;
 	font-size:12px;
 	line-height:16px;
@@ -214,7 +210,6 @@ to {background: #00a5d4}
 	color:#666;
         margin-top: 0px;
 	font-size:18px;
-	font-family:Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	}
 .vt3Con dl{
 	width:380px;
@@ -224,13 +219,11 @@ to {background: #00a5d4}
 	font-weight:bold;
 	margin-top:0px;
 	font-size:14px;
-	font-family:"Gill Sans", "Gill Sans MT", "Myriad Pro", "DejaVu Sans Condensed", Helvetica, Arial, sans-serif;
 	}
 .vt3Con dd{
         margin-left:0px;
 	margin-top:5px;
 	width:380px;
-	font-family: Helvetica, Arial, sans-serif;
 	color:#999;
 	font-size:12px;
 	line-height:14px;
@@ -253,13 +246,11 @@ to {background: #00a5d4}
         margin-top: 0px;
 	color:#666;
 	font-size:18px;
-	font-family:Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 	}
 .vt3Accept ul{
 	margin-top:20px;
 	}
 .vt3Accept li, .vt3End  a{
-	font-family: Helvetica, Arial, sans-serif;
 	color:#999;
 	font-size:12px;
 	line-height:16px;
@@ -292,7 +283,6 @@ to {background: #00a5d4}
 	text-align:center;}
 
 .vttd{
-	font-family: Helvetica, Arial, sans-serif;
 	color:#999;
 	font-size:12px;
 	line-height:16px;
@@ -303,5 +293,22 @@ to {background: #00a5d4}
 .vtnew{
 	color:#666;
 	font-size:18px;
-	font-family:Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif;
 }
+
+form .margin-form .input-text { width: 250px; }
+
+form.half-form { content: ""; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; width: 50%; }
+form.half-form.L { float: left; padding-right: 10px; }
+form.half-form.R { float: right; padding-left: 10px; }
+
+form.half-form label { width: 210px; }
+form.half-form .margin-form { padding-left: 230px; }
+form.half-form .margin-form .input-text { width: 90%; }
+
+fieldset h4 { margin-top: 0px; }
+fieldset h4.sep-title { border-top: #CCCED7 dotted 1px; padding-top: 10px; margin-bottom: 10px; }
+fieldset .PT2 { padding-top: 2px; }
+fieldset .PT4 { padding-top: 4px; }
+fieldset .MB15 { margin-bottom: 15px!important; }
+fieldset .resetMargin { margin: 0px!important; }
+fieldset .centerText { text-align: center!important; }

@@ -1,6 +1,0 @@
-TODO
-
-1. successUrl
-2. failUrl
-3. cancelUrl
-4. datafeed
