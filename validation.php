@@ -25,15 +25,20 @@ if($vtpayment->active) {
 		$cart = new Cart((int)$cart_id);
 		$context->cart = $cart;
 		if (Validate::isLoadedObject($cart)) {
-			$customer = new Customer((int)$cart->id_customer);
-			$context->customer = $customer;
+			if ($cart->OrderExists()) {
+				Tools::redirect('index.php?controller=history');
+			}
+			else {
+				$customer = new Customer((int)$cart->id_customer);
+				$context->customer = $customer;
 
-			$currency = $context->currency;
-			$total = (float)($cart->getOrderTotal(true, Cart::BOTH));
+				$currency = $context->currency;
+				$total = (float)($cart->getOrderTotal(true, Cart::BOTH));
 
-			$order_status = (int)Configuration::get('PS_OS_PAYMENT');
-			$vtpayment->validateOrder((int)$cart->id, (int)$order_status, (float)$total, $vtpayment->displayName, NULL, array(), null, false, $customer->secure_key);
-			Tools::redirect('index.php?controller=history');
+				$order_status = (int)Configuration::get('PS_OS_PAYMENT');
+				$vtpayment->validateOrder((int)$cart->id, (int)$order_status, (float)$total, $vtpayment->displayName, NULL, array(), null, false, $customer->secure_key);
+				Tools::redirect('index.php?controller=history');
+			}
 		}
 		else {
 			Tools::redirect('index.php?controller=order&step=1');
