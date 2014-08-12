@@ -29,7 +29,7 @@ class VTPayment extends PaymentModule
 
 		parent::__construct();
 
-		$this->displayName = $this->l('VTPayment International');
+		$this->displayName = $this->l('VTPayment');
 		$this->description = $this->l('Accept payments using VTPayment.');
 		$this->confirmUninstall = $this->l('Are you sure you want to delete your details?');
 
