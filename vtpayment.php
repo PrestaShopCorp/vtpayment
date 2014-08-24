@@ -8,10 +8,6 @@
 if (!defined('_PS_VERSION_'))
 	exit;
 
-/* Backward compatibility */
-if (version_compare(_PS_VERSION_, '1.5', '<'))
-	require_once (_PS_MODULE_DIR_.'vtpayment/backward_compatibility/backward.php');
-
 class VTPayment extends PaymentModule
 {
 
@@ -32,6 +28,10 @@ class VTPayment extends PaymentModule
 		$this->displayName = $this->l('VTPayment');
 		$this->description = $this->l('Accept payments using VTPayment.');
 		$this->confirmUninstall = $this->l('Are you sure you want to delete your details?');
+
+		/* Backward compatibility */
+		if (version_compare(_PS_VERSION_, '1.5', '<'))
+			require_once (_PS_MODULE_DIR_.'vtpayment/backward_compatibility/backward.php');
 
 		$this->context->smarty->assign('base_dir', __PS_BASE_URI__);
 	}
