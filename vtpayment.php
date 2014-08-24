@@ -74,7 +74,7 @@ class VTPayment extends PaymentModule
 		/* VTPayment API credentials should be filled */
 		if (Configuration::get('VTPAYMENT_GATEWAY_URL') == '' ||
 				Configuration::get('VTPAYMENT_MERCHANT_ID') == '' || Configuration::get('VTPAYMENT_SECRET_KEY') == '')
-			$this->_warning[] = $this->l('In order to use VTPayment, please provide your API credentials.');
+			$this->_warning[] = $this->displayError($this->l('In order to use VTPayment, please provide your API credentials.'));
 
 		// add 1.4 token support
 		if(method_exists('Tools','getAdminTokenLite')){
@@ -103,7 +103,7 @@ class VTPayment extends PaymentModule
 	private function _saveSettingsBasic()
 	{
 		if (!isset($_POST['vtpayment_gateway_url']) || !$_POST['vtpayment_gateway_url'] || !isset($_POST['vtpayment_merchant_id']) || !$_POST['vtpayment_merchant_id'] || !isset($_POST['vtpayment_secret_key']) || !$_POST['vtpayment_secret_key'])
-			$this->_error[] = $this->l('Please fill in all required fields.');
+			$this->_error[] = $this->displayError($this->l('Please fill in all required fields.'));
 
 		Configuration::updateValue('VTPAYMENT_GATEWAY_URL', pSQL(Tools::getValue('vtpayment_gateway_url')));
 		Configuration::updateValue('VTPAYMENT_MERCHANT_ID', pSQL(Tools::getValue('vtpayment_merchant_id')));
@@ -112,7 +112,7 @@ class VTPayment extends PaymentModule
 		/* TODO: Automated check to verify the API credentials configured by the merchant */
 
 		if (!count($this->_error))
-			$this->_validation[] = $this->l('Congratulations, your configuration was updated successfully');
+			$this->_validation[] = $this->displayConfirmation($this->l('Congratulations, your configuration was updated successfully'));
 	}
 
 	/* VTPayment payment hook

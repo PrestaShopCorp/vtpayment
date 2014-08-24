@@ -70,17 +70,17 @@
 	<div class="vt3End">
 		{if $vtpayment_validation}
 				{foreach from=$vtpayment_validation item=validation}
-					{$validation|escape:'htmlall':'UTF-8'}<br />
+					{$validation|strval}<br />
 				{/foreach}
 		{/if}
 		{if $vtpayment_error}
 				{foreach from=$vtpayment_error item=error}
-					{$error|escape:'htmlall':'UTF-8'}<br />
+					{$error|strval}<br />
 				{/foreach}
 		{/if}
 		{if $vtpayment_warning}
 				{foreach from=$vtpayment_warning item=warning}
-					{$warning|escape:'htmlall':'UTF-8'}<br />
+					{$warning|strval}<br />
 				{/foreach}
 		{/if}
 	</div>
