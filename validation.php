@@ -32,7 +32,7 @@ if($vtpayment->active) {
 				$context->customer = $customer;
 
 				$currency = $context->currency;
-				$total = (float)($cart->getOrderTotal(true, Cart::BOTH));
+				$total = (float)number_format($cart->getOrderTotal(true, 3), 2, '.', '');
 
 				$order_status = (int)Configuration::get('PS_OS_PAYMENT');
 				$vtpayment->validateOrder((int)$cart->id, (int)$order_status, (float)$total, $vtpayment->displayName, NULL, array(), null, false, $customer->secure_key);
