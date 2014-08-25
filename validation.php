@@ -37,7 +37,7 @@ if($vtpayment->active) {
 
 				$order_status = (int)Configuration::get('PS_OS_PAYMENT');
 				$vtpayment->validateOrder((int)$cart->id, (int)$order_status, (float)$total, $vtpayment->displayName, NULL, array(), null, false, $customer->secure_key);
-				Tools::redirect('index.php?controller=history');
+				Tools::redirectLink(__PS_BASE_URI__.'history.php');
 			}
 		}
 		else {
