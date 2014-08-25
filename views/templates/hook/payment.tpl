@@ -27,7 +27,7 @@
 		<input type="hidden" name="signature" value="{$signature|escape:'htmlall':'UTF-8'}" />
 		<input type="hidden" name="cart_id" value="{$cart_id|escape:'htmlall':'UTF-8'}" />
 		<a href="javascript:document.checkout_confirmation.submit();" title="{l s='Pay with VTPayment' mod='vtpayment'}">
-			<img src="http://online.unionpay.com/static/portal/images/global/logo.gif" alt="{l s='Pay with VTPayment' mod='vtpayment'}"/>
+			<img src="{$module_dir|escape:'htmlall':'UTF-8'}img/unpay.png" alt="{l s='Pay with VTPayment' mod='vtpayment'}"/>
 			&nbsp;{l s='Pay with VTPayment' mod='vtpayment'}
 		</a>
 	</p>
