@@ -26,7 +26,7 @@ if($vtpayment->active) {
 		$context->cart = $cart;
 		if (Validate::isLoadedObject($cart)) {
 			if ($cart->OrderExists()) {
-				Tools::redirect('index.php?controller=history');
+				Tools::redirectLink(__PS_BASE_URI__.'history.php');
 			}
 			else {
 				$customer = new Customer((int)$cart->id_customer);
@@ -41,13 +41,13 @@ if($vtpayment->active) {
 			}
 		}
 		else {
-			Tools::redirect('index.php?controller=order&step=1');
+			Tools::redirectLink(__PS_BASE_URI__.'order.php?step=1');
 		}
 	}
 	else {
-		Tools::redirect('index.php?controller=order&step=1');
+		Tools::redirectLink(__PS_BASE_URI__.'order.php?step=1');
 	}
 }
 else {
-		Tools::redirect('index.php?controller=order&step=1');
+		Tools::redirectLink(__PS_BASE_URI__.'order.php?step=1');
 }
