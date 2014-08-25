@@ -16,7 +16,7 @@
 		<input type="hidden" name="orderNum" value="{$orderNum|escape:'htmlall':'UTF-8'}" />
 		<input type="hidden" name="orderAmount" value="{$orderAmount|escape:'htmlall':'UTF-8'}" />
 		<input type="hidden" name="orderCurrency" value="{$orderCurrency|escape:'htmlall':'UTF-8'}" />
-		<input type="hidden" name="merReserve" value="{$merReserve|escape:'htmlall':'UTF-8'}" "" />
+		<input type="hidden" name="merReserve" value="{$merReserve|escape:'htmlall':'UTF-8'}" />
 		<input type="hidden" name="frontURL" value="{$frontURL|escape:'htmlall':'UTF-8'}" />
 		<input type="hidden" name="backURL" value="{$backURL|escape:'htmlall':'UTF-8'}" />
 		<input type="hidden" name="merID" value="{$merID|escape:'htmlall':'UTF-8'}">
