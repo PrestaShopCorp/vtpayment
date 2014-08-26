@@ -36,7 +36,7 @@ if($vtpayment->active) {
 				$total = (float)number_format($cart->getOrderTotal(true, Cart::BOTH), 2, '.', '');
 
 				$order_status = (int)Configuration::get('PS_OS_PAYMENT');
-				$vtpayment->validateOrder((int)$cart->id, (int)$order_status, (float)$total, $vtpayment->displayName, NULL, array(), null, false, $customer->secure_key);
+				$vtpayment->validateOrder((int)$cart->id, (int)$order_status, (float)$total, $vtpayment->displayName, NULL, array(), (int)$currency->id, false, $customer->secure_key);
 				Tools::redirectLink(__PS_BASE_URI__.'history.php');
 			}
 		}
