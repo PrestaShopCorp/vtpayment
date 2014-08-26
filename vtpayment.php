@@ -38,7 +38,7 @@ class VTPayment extends PaymentModule
 
 	public function install()
 	{
-		return parent::install() && $this->registerHook('payment');
+		return parent::install() && $this->registerHook('payment') && $this->registerHook('orderConfirmation');
 	}
 
 	/**
@@ -181,6 +181,27 @@ class VTPayment extends PaymentModule
 		$html .= $this->display(__FILE__, 'views/templates/hook/payment.tpl');
 
 		return $html;
+	}
+
+	public function hookOrderConfirmation($params)
+	{
+		if (!isset($params['objOrder']) || ($params['objOrder']->module != $this->name))
+			return false;
+		if (isset($params['objOrder']) && Validate::isLoadedObject($params['objOrder']) && isset($params['objOrder']->valid) &&
+				version_compare(_PS_VERSION_, '1.5', '>=') && isset($params['objOrder']->reference))
+		{
+			$this->smarty->assign('vtpayment_order', array('id' => $params['objOrder']->id, 'reference' => $params['objOrder']->reference, 'valid' => $params['objOrder']->valid));
+			return $this->display(__FILE__, 'views/templates/hook/order-confirmation.tpl');
+		}
+
+		// 1.4 support
+		if (isset($params['objOrder']) && Validate::isLoadedObject($params['objOrder']) && isset($params['objOrder']->valid) &&
+				version_compare(_PS_VERSION_, '1.5', '<'))
+		{
+			$this->smarty->assign('vtpayment_order', array('id' => $params['objOrder']->id,  'valid' => $params['objOrder']->valid));
+
+			return $this->display(__FILE__, 'views/templates/hook/order-confirmation.tpl');
+		}
 	}
 
 	private function _generateSignature($array, $secret)

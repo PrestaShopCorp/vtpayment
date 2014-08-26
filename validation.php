@@ -25,29 +25,29 @@ if($vtpayment->active) {
 		$cart = new Cart((int)$cart_id);
 		$context->cart = $cart;
 		if (Validate::isLoadedObject($cart)) {
+			$customer = new Customer((int)$cart->id_customer);
+			$context->customer = $customer;
+
 			if ($cart->OrderExists()) {
-				Tools::redirectLink(__PS_BASE_URI__.'history.php');
+				Tools::redirectLink(__PS_BASE_URI__.'order-confirmation.php?id_cart='.(int)$context->cart->id.'&id_module='.(int)$vtpayment->id.'&id_order='.(int)$vtpayment->currentOrder.'&key='.$customer->secure_key);
 			}
 			else {
-				$customer = new Customer((int)$cart->id_customer);
-				$context->customer = $customer;
-
 				$currency = $context->currency;
 				$total = (float)number_format($cart->getOrderTotal(true, Cart::BOTH), 2, '.', '');
 
 				$order_status = (int)Configuration::get('PS_OS_PAYMENT');
 				$vtpayment->validateOrder((int)$cart->id, (int)$order_status, (float)$total, $vtpayment->displayName, NULL, array(), (int)$currency->id, false, $customer->secure_key);
-				Tools::redirectLink(__PS_BASE_URI__.'history.php');
+				Tools::redirectLink(__PS_BASE_URI__.'order-confirmation.php?id_cart='.(int)$context->cart->id.'&id_module='.(int)$vtpayment->id.'&id_order='.(int)$vtpayment->currentOrder.'&key='.$customer->secure_key);
 			}
 		}
 		else {
-			Tools::redirectLink(__PS_BASE_URI__.'order.php?step=1');
+			die($vtpayment->l('Invalid Cart ID.'));
 		}
 	}
 	else {
-		Tools::redirectLink(__PS_BASE_URI__.'order.php?step=1');
+		die($vtpayment->l('Invalid order, please contact our Customer service.'));
 	}
 }
 else {
-		Tools::redirectLink(__PS_BASE_URI__.'order.php?step=1');
+	die($vtpayment->l('VTPayment module is not active.'));
 }
