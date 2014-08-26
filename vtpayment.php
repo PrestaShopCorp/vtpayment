@@ -142,7 +142,7 @@ class VTPayment extends PaymentModule
 		/* Order related parameters */
 		$cart_id = (int)$this->context->cart->id;
 		$order_num = $this->_generateOrderNumber($cart_id, $trans_time);
-		$order_amount = number_format($this->context->cart->getOrderTotal(true, 3), 2, '.', '');
+		$order_amount = number_format($this->context->cart->getOrderTotal(true, Cart::BOTH), 2, '.', '');
 		$order_amount = sprintf('%.2f', $order_amount);
 		$order_amount = $order_amount * 100;
 		$order_amount = str_pad( $order_amount, 12, '0', STR_PAD_LEFT);
