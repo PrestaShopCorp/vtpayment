@@ -38,6 +38,12 @@ class VTPayment extends PaymentModule
 
 	public function install()
 	{
+		if(!Configuration::get('VTPAYMENT_GATEWAY_URL'))
+			Configuration::updateValue('VTPAYMENT_GATEWAY_URL', '');
+		if(!Configuration::get('VTPAYMENT_MERCHANT_ID'))
+			Configuration::updateValue('VTPAYMENT_MERCHANT_ID', '');
+		if(!Configuration::get('VTPAYMENT_SECRET_KEY'))
+			Configuration::updateValue('VTPAYMENT_SECRET_KEY', '');
 		return parent::install() && $this->registerHook('payment') && $this->registerHook('orderConfirmation');
 	}
 
