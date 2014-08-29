@@ -17,6 +17,8 @@
 	{else}
 		{l s='the ID' mod='vtpayment'} <b>{$vtpayment_order.id|escape:html:'UTF-8'}</b>
 	{/if}.
+	<br /><br />
+	{l s='The total amount of this order is' mod='vtpayment'} <span class="price">{$vtpayment_order.total_to_pay|escape:'htmlall':'UTF-8'}</span>
 </div>
 {else}
 <div class="error">
