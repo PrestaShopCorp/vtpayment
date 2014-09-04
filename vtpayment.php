@@ -220,6 +220,12 @@ class VTPayment extends PaymentModule
 		return md5($str.$secret);
 	}
 
+	public function verifySignature($array, $signature)
+	{
+		$secret = Configuration::get('VTPAYMENT_SECRET_KEY');
+		return $signature == $this->_generateSignature($array, $secret);
+	}
+
 	private function _generateOrderNumber($cart_id, $trans_time)
 	{
 		$secret = Configuration::get('VTPAYMENT_SECRET_KEY');
