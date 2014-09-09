@@ -55,7 +55,7 @@ if($vtpayment->active) {
 			$currency = new Currency((int)Currency::getIdByIsoCode(Tools::getValue('settCurrency')));
 
 			if (!Validate::isLoadedObject($currency) || $currency->id != $cart->id_currency)
-				die($vtpayment->l('Invalid Currency ID').' '.($currency->id.'|'.$cart->id_currency));
+				die($vtpayment->l('Invalid Currency ID'));
 
 			$customer = new Customer((int)$cart->id_customer);
 			$context->customer = $customer;
