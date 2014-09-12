@@ -17,7 +17,7 @@ class VTPayment extends PaymentModule
 
 	public function __construct()
 	{
-		$this->name = 'vtpayment';
+		$this->name = 'UnionPay Online';
 		$this->version = '1.0.0';
 		$this->author = 'VTPayment';
 		$this->className = 'VTPayment';
@@ -26,7 +26,7 @@ class VTPayment extends PaymentModule
 		parent::__construct();
 
 		$this->displayName = $this->l('VTPayment');
-		$this->description = $this->l('Accept payments using VTPayment.');
+		$this->description = $this->l('Accept payments with UnionPay cards by using VTPayment with gateway.');
 		$this->confirmUninstall = $this->l('Are you sure you want to delete your details?');
 
 		/* Backward compatibility */
