@@ -18,7 +18,7 @@ class VTPayment extends PaymentModule
 	public function __construct()
 	{
 		$this->name = 'vtpayment';
-		$this->version = '1.0.0';
+		$this->version = '1.0.1';
 		$this->author = 'VTPayment';
 		$this->className = 'VTPayment';
 		$this->tab = 'payments_gateways';

@@ -61,6 +61,7 @@ if($vtpayment->active) {
 			$context->customer = $customer;
 
 			if ($cart->OrderExists()) {
+				Configuration::updateValue('VTPAYMENT_CONFIGURATION_OK', true);
 				Tools::redirectLink(__PS_BASE_URI__.'order-confirmation.php?id_cart='.(int)$context->cart->id.'&id_module='.(int)$vtpayment->id.'&id_order='.(int)$vtpayment->currentOrder.'&key='.$customer->secure_key);
 			}
 			else {
@@ -68,6 +69,7 @@ if($vtpayment->active) {
 
 				$order_status = (int)Configuration::get('PS_OS_PAYMENT');
 				$vtpayment->validateOrder((int)$cart->id, (int)$order_status, (float)$total, $vtpayment->displayName, NULL, array(), (int)$currency->id, false, $customer->secure_key);
+				Configuration::updateValue('VTPAYMENT_CONFIGURATION_OK', true);
 				Tools::redirectLink(__PS_BASE_URI__.'order-confirmation.php?id_cart='.(int)$context->cart->id.'&id_module='.(int)$vtpayment->id.'&id_order='.(int)$vtpayment->currentOrder.'&key='.$customer->secure_key);
 			}
 		}
