@@ -52,7 +52,7 @@ if($vtpayment->active) {
 		$cart = new Cart((int)$cart_id);
 		if (Validate::isLoadedObject($cart)) {
 			$context->cart = $cart;
-			$currency = new Currency((int)Currency::getIdByIsoCode(Tools::getValue('settCurrency')));
+			$currency = new Currency((int)Currency::getIdByIsoCode(Tools::getValue('orderCurrency')));
 
 			if (!Validate::isLoadedObject($currency) || $currency->id != $cart->id_currency)
 				die($vtpayment->l('Invalid Currency ID'));
@@ -65,7 +65,7 @@ if($vtpayment->active) {
 				Tools::redirectLink(__PS_BASE_URI__.'order-confirmation.php?id_cart='.(int)$context->cart->id.'&id_module='.(int)$vtpayment->id.'&id_order='.(int)$vtpayment->currentOrder.'&key='.$customer->secure_key);
 			}
 			else {
-				$total = (float)number_format(Tools::getValue('settAmount') / 100.00, 2, '.', '');
+				$total = (float)number_format(Tools::getValue('orderAmount') / 100.00, 2, '.', '');
 
 				$order_status = (int)Configuration::get('PS_OS_PAYMENT');
 				$vtpayment->validateOrder((int)$cart->id, (int)$order_status, (float)$total, $vtpayment->displayName, NULL, array(), (int)$currency->id, false, $customer->secure_key);
