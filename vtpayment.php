@@ -2,7 +2,7 @@
 
 /*
  *  @author PrestaShop SA <contact@prestashop.com>
- *  @copyright  2007-2014 PrestaShop SA
+ *  @copyright  2007-2015 PrestaShop SA
  *
  */
 if (!defined('_PS_VERSION_'))
